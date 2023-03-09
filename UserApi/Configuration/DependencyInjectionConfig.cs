@@ -1,13 +1,14 @@
 ﻿using UserApi.Interfaces;
 using UserApi.Services;
 
-namespace UserApi.Configuration
+namespace UserApi.Infra
 {
     public class DependencyInjectionConfig
     {
-        public IServiceCollection ResolveDependencies(IServiceCollection services)
+        public static IServiceCollection ResolveDependencies(IServiceCollection services)
         {
-            services.AddScoped<ITokenService>(TokenService);
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }

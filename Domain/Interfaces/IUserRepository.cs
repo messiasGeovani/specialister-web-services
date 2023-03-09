@@ -4,6 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IUserRepository
     {
-        IEnumerable<User> FindById(int id);
+        User FindById(Guid id);
+        User? Find(string username, string password);
     }
 }

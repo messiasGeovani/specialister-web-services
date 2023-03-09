@@ -1,50 +1,21 @@
 using Data.Context;
 using IoC;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using UserApi.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SpecialisterConnection"));
-});
 
+DependencyContainer.AddPersistance(builder.Services, builder.Configuration);
 DependencyContainer.RegisterServices(builder.Services);
-builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+DependencyInjectionConfig.ResolveDependencies(builder.Services);
 
 builder.Services.AddControllers();
 
-var key = Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]);
-
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(x =>
-{
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = true;
-    x.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("Admin", policy => policy.RequireRole("manager"));
-    options.AddPolicy("Manager", policy => policy.RequireRole("employee"));
-});
+AuthenticationConfig.Setup(builder.Services, builder.Configuration);
+AuthorizationConfig.Setup(builder.Services);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

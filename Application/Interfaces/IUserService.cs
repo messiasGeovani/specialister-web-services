@@ -4,6 +4,6 @@ namespace Application.Interfaces
 {
     public interface IUserService
     {
-        UserDTO GetUser(int id);
+        UserDTO GetUser(Guid id);
     }
 }

@@ -33,6 +33,6 @@ namespace IoC
             services.AddScoped<IHashService, HashService>();
 
             return services;
-        }        
+        }  
     }
 }

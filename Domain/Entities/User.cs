@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities
 {
-    public class User
+    public class User : Entity
     {
         public Guid Id { get; set; }
         public string UserName { get; set; }

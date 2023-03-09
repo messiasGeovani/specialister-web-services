@@ -3,7 +3,8 @@ using Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using UserApi.Interfaces;
+using UserApi.Application.DTOs;
+using UserApi.Application.Interfaces;
 using UserApi.Services;
 
 namespace UserApi.Controllers
@@ -13,17 +14,19 @@ namespace UserApi.Controllers
     public class AuthController : ControllerBase
     {
         private IAuthService _authService;
+        private IHashService _hashService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IHashService hashService)
         {
             _authService = authService;
+            _hashService = hashService;
         }
 
         [HttpPost]
         [Route("auth")]
-        public ActionResult<UserDTO> AuthenticateAsync([FromBody] UserDTO model)
+        public async Task<ActionResult<AuthDTO>> Authenticate([FromBody] AuthDTO model)
         {
-            var auth = _authService.Authenticate(model.UserName, model.Password);
+            var auth = await _authService.Authenticate(model.UserName, model.Password);
 
             if (auth == null)
             {
@@ -47,6 +50,7 @@ namespace UserApi.Controllers
             return Ok(new
             {
                 Username = "Guest_" + randomString,
+                Password = _hashService.EncryptPassword("seila123")
             });
         }
 

@@ -1,13 +1,10 @@
-using Data.Context;
 using IoC;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
 using UserApi.Infra;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+AutomapperConfig.Setup(builder.Services);
 DependencyContainer.AddPersistance(builder.Services, builder.Configuration);
 DependencyContainer.RegisterServices(builder.Services);
 DependencyInjectionConfig.ResolveDependencies(builder.Services);

@@ -1,6 +1,7 @@
 ﻿using Data.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
@@ -13,16 +14,13 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public User FindById(Guid id)
-        {
-            return _context.Users.Find(id);
-        }
+        public ValueTask<User?> FindById(Guid id)        
+            => _context.Users.FindAsync(id);
 
-        public User? Find(string username, string password)
-        {
-            return _context.Users
+        public Task<User?> Find(string username, string password)
+            => _context.Users
                 .Where(x => x.UserName == username && x.Password == password)
-                .FirstOrDefault();
-        }        
+                .SingleOrDefaultAsync();
+          
     }
 }

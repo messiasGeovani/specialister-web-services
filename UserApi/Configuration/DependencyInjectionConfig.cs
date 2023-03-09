@@ -1,4 +1,6 @@
-﻿using UserApi.Interfaces;
+﻿using UserApi.Application.Interfaces;
+using UserApi.Application.Services;
+using UserApi.Interfaces;
 using UserApi.Services;
 
 namespace UserApi.Infra

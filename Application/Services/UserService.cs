@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interfaces;
+using AutoMapper;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -7,26 +8,23 @@ namespace Application.Services
     public class UserService : IUserService
     {
         private IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        private IMapper _mapper;
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public UserDTO? GetUser(Guid id)
+        public async Task<UserDTO> GetUser(Guid id)
         {
-            var user = _userRepository.FindById(id);
+            var user = await _userRepository.FindById(id);
 
             if (user == null)
             {
                 return null;
             }
 
-            return new UserDTO()
-            {
-                Id = user.Id,
-                UserName = user.UserName
-            };
+            return _mapper.Map<UserDTO>(user);
         }
     }
 }

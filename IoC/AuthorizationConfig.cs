@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IoC
 {
@@ -13,8 +8,8 @@ namespace IoC
         {
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policy => policy.RequireRole("manager"));
-                options.AddPolicy("Manager", policy => policy.RequireRole("employee"));
+                options.AddPolicy("Specialist", policy => policy.RequireRole("specialist"));
+                options.AddPolicy("Explorer", policy => policy.RequireRole("explorer"));
             });
 
             return services;

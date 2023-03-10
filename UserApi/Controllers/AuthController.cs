@@ -55,13 +55,13 @@ namespace UserApi.Controllers
         }
 
         [HttpGet]
-        [Route("employees")]
-        [Authorize(Roles = "employee,manager")]
-        public async Task<ActionResult> Employee() => NoContent();
+        [Route("specialists")]
+        [Authorize(Roles = "specialist")]
+        public async Task<ActionResult> Specialist() => NoContent();
 
         [HttpGet]
-        [Route("managers")]
-        [Authorize(Roles = "manager")]
-        public async Task<ActionResult> Manager() => NoContent();
+        [Route("explorers")]
+        [Authorize(Roles = "explorer")]
+        public async Task<ActionResult> Explorer() => NoContent();
     }
 }

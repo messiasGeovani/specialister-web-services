@@ -29,5 +29,10 @@ namespace Data.Repositories
             return _context.SaveChangesAsync();
         }
 
+        public Task Update(User user)
+        {
+            _context.Users.Update(user);
+            return _context.SaveChangesAsync();
+        }
     }
 }

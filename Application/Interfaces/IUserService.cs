@@ -6,5 +6,6 @@ namespace Application.Interfaces
     {
         Task<UserDTO> GetUser(Guid id);
         Task<UserDTO> CreateUser(UserDTO dto);
+        Task<UserDTO> SetUserRole(string role, Guid userId);
     }
 }

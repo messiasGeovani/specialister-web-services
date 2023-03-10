@@ -7,5 +7,6 @@ namespace Domain.Interfaces
         Task<List<User>> Get();
         ValueTask<User?> GetById(Guid id);
         Task Create(User user);
+        Task Update(User user);
     }
 }

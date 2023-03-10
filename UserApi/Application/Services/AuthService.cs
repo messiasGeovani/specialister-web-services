@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using AutoMapper;
 using Domain.Interfaces;
 using UserApi.Application.DTOs;
@@ -39,12 +40,11 @@ namespace UserApi.Application.Services
                 return null;
             }
 
-            var token = _tokenService.GenerateToken(user);
+            var token = _tokenService.GenerateToken(_mapper.Map<UserDTO>(user));
             var dto = _mapper.Map<AuthDTO>(user);
 
             dto.Password = null;
             dto.Token = token;
-
 
             return dto;
         }

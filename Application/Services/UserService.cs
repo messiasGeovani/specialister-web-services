@@ -45,5 +45,21 @@ namespace Application.Services
 
             return _mapper.Map<UserDTO>(user);
         }
+
+        public async Task<UserDTO> SetUserRole(string role, Guid userId)
+        {
+            var user = await _userRepository.GetById((Guid)userId);
+
+            if (user is null || user.Role != null)
+            {
+                return null;
+            }
+
+            user.Role = role;
+
+            await _userRepository.Update(user);
+
+            return _mapper.Map<UserDTO>(user);
+        }
     }
 }

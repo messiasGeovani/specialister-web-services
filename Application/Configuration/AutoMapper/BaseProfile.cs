@@ -2,7 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 
-namespace Configuration
+namespace Application.Configuration.AutoMapper
 {
     public class BaseProfile : Profile
     {

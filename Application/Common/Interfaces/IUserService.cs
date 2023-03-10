@@ -1,6 +1,6 @@
-﻿using Application.DTOs;
+﻿using Application.Common.DTOs;
 
-namespace Application.Interfaces
+namespace Application.Common.Interfaces
 {
     public interface IUserService
     {

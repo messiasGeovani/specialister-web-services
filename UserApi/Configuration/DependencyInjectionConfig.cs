@@ -1,5 +1,5 @@
 ﻿using UserApi.Application.Interfaces;
-using UserApi.Application.Services;
+using UserApi.Application.Common.Services;
 using UserApi.Interfaces;
 using UserApi.Services;
 

@@ -1,10 +1,10 @@
-﻿using Application.DTOs;
-using Application.Interfaces;
+﻿using Application.Common.DTOs;
+using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
-namespace Application.Services
+namespace Application.Common.Services
 {
     public class UserService : IUserService
     {
@@ -48,7 +48,7 @@ namespace Application.Services
 
         public async Task<UserDTO> SetUserRole(string role, Guid userId)
         {
-            var user = await _userRepository.GetById((Guid)userId);
+            var user = await _userRepository.GetById(userId);
 
             if (user is null || user.Role != null)
             {

@@ -1,5 +1,5 @@
-﻿using Application.Interfaces;
-using Application.Services;
+﻿using Application.Common.Interfaces;
+using Application.Common.Services;
 using Data.Context;
 using Data.Interfaces;
 using Data.Repositories;

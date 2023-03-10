@@ -1,5 +1,4 @@
-﻿using Application.DTOs;
-using Domain.Entities;
+﻿using Application.Common.DTOs;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

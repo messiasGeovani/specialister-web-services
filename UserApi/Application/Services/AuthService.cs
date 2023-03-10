@@ -1,12 +1,12 @@
-﻿using Application.DTOs;
-using Application.Interfaces;
+﻿using Application.Common.DTOs;
+using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Interfaces;
 using UserApi.Application.DTOs;
 using UserApi.Application.Interfaces;
 using UserApi.Interfaces;
 
-namespace UserApi.Application.Services
+namespace UserApi.Application.Common.Services
 {
     public class AuthService : IAuthService
     {

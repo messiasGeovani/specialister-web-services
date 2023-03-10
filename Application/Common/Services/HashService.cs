@@ -1,7 +1,6 @@
-﻿using Application.Interfaces;
-using BCrypt.Net;
+﻿using Application.Common.Interfaces;
 
-namespace Application.Services
+namespace Application.Common.Services
 {
     public class HashService : IHashService
     {

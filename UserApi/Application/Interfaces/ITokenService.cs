@@ -1,5 +1,4 @@
-﻿using Application.DTOs;
-using Domain.Entities;
+﻿using Application.Common.DTOs;
 
 namespace UserApi.Interfaces
 {

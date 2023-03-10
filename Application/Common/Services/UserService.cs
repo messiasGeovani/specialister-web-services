@@ -4,15 +4,19 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 
+
 namespace Application.Common.Services
 {
     public class UserService : IUserService
     {
+        private IErrorNotifier _errorNotifier;
         private IUserRepository _userRepository;
         private IMapper _mapper;
         private IHashService _hashService;
-        public UserService(IUserRepository userRepository, IMapper mapper, IHashService hashService)
+
+        public UserService(IErrorNotifier errorNotifier, IUserRepository userRepository, IMapper mapper, IHashService hashService)
         {
+            _errorNotifier = errorNotifier;
             _userRepository = userRepository;
             _mapper = mapper;
             _hashService = hashService;
@@ -50,8 +54,15 @@ namespace Application.Common.Services
         {
             var user = await _userRepository.GetById(userId);
 
-            if (user is null || user.Role != null)
+            if (user is null)
             {
+                _errorNotifier.AddNotification("User do not exist!");
+                return null;
+            }
+
+            if (user.Role != null)
+            {
+                _errorNotifier.AddNotification("User already have a role!");
                 return null;
             }
 

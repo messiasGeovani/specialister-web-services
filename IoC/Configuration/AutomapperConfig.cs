@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace IoC
+namespace IoC.Configuration
 {
     public class AutomapperConfig
     {

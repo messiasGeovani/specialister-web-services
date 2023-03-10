@@ -9,22 +9,25 @@ namespace UserApi.Application.Common.Services
 {
     public class AuthService : IAuthService
     {
+        private IMapper _mapper;
+        private IErrorNotifier _errorNotifier;
         private IUserRepository _userRepository;
         private ITokenService _tokenService;
         private IHashService _hashService;
-        private IMapper _mapper;
 
         public AuthService(
+            IMapper mapper,
+            IErrorNotifier errorNotifier,
             IUserRepository userRepository,
             ITokenService tokenService,
-            IHashService hashService,
-            IMapper mapper
+            IHashService hashService            
         )
         {
+            _mapper = mapper;
+            _errorNotifier = errorNotifier;
             _userRepository = userRepository;
             _tokenService = tokenService;
             _hashService = hashService;
-            _mapper = mapper;
         }
 
         public async Task<AuthDTO?> Authenticate(string username, string password)
@@ -36,6 +39,7 @@ namespace UserApi.Application.Common.Services
 
             if (user is null)
             {
+                _errorNotifier.AddNotification("Usuário ou senha inválidos");
                 return null;
             }
 

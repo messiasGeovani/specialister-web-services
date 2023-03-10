@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Http.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Application.Common.DTOs;
@@ -8,12 +9,13 @@ namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
         private IAuthService _authService;
         private IHashService _hashService;
 
-        public AuthController(IAuthService authService, IHashService hashService)
+        public AuthController(IAuthService authService, IHashService hashService, IErrorNotifier errorNotifier)
+            : base(errorNotifier)
         {
             _authService = authService;
             _hashService = hashService;
@@ -25,12 +27,7 @@ namespace UserApi.Controllers
         {
             var auth = await _authService.Authenticate(model.UserName, model.Password);
 
-            if (auth is null)
-            {
-                return BadRequest(new { message = "Usuário ou senha inválida" });
-            }
-
-            return auth;
+            return CustomResponse(auth);
         }
 
         [HttpGet]

@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Common.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Http.Models
 {
     [ApiController]
     public abstract class BaseController : ControllerBase
     {
-        protected ActionResult CustomResponse(object? result = null)
+        private readonly IErrorNotifier _errorNotifier;
+
+        protected BaseController(IErrorNotifier errorNotifier)
         {
-            if (OperacaoValida())
+            _errorNotifier = errorNotifier;
+        }
+
+        protected ActionResult CustomResponse(object result = null)
+        {
+            if (IsValidOperation())
             {
                 return Ok(new
                 {
@@ -18,19 +27,38 @@ namespace Http.Models
 
             return BadRequest(new
             {
-                soccess = false,
-                errors = ObterErros()
+                success = false,
+                errors = GetErrors()
             });
         }
-
-        protected bool OperacaoValida()
+        protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-            return true;
+            if (!modelState.IsValid)
+            {
+                NotifyInvalidModelError(modelState);
+            }
+
+            return CustomResponse();
         }
 
-        protected string ObterErros()
+        protected void NotifyInvalidModelError(ModelStateDictionary modelState)
         {
-            return "";
+            var errors = modelState.Values.SelectMany(e => e.Errors);
+            foreach (var error in errors)
+            {
+                string errorMsg = error.Exception?.Message ?? error.ErrorMessage;
+                _errorNotifier.AddNotification(errorMsg);
+            }
+        }
+
+        protected bool IsValidOperation()
+        {
+            return !_errorNotifier.HasNotification();
+        }
+
+        protected IEnumerable<string> GetErrors()
+        {
+            return _errorNotifier.GetNotifications().Select(n => n.Message);
         }
     }
 }

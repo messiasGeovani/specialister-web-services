@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Errors;
+using Application.Common.Interfaces;
 using Application.Common.Services;
 using Data.Context;
 using Data.Interfaces;
@@ -31,8 +32,9 @@ namespace IoC
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHashService, HashService>();
+            services.AddScoped<IErrorNotifier, ErrorNotifier>();
 
             return services;
-        }  
+        }
     }
 }

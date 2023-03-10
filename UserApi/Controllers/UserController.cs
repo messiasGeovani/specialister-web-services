@@ -1,5 +1,6 @@
 ﻿using Application.Common.DTOs;
 using Application.Common.Interfaces;
+using Http.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,23 +11,24 @@ namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
         private IUserService _userService;
         private ITokenService _tokenService;
 
-        public UserController(IUserService userService, ITokenService tokenService)
+        public UserController(IUserService userService, ITokenService tokenService, IErrorNotifier errorNotifier)
+            : base(errorNotifier)
         {
             _userService = userService;
             _tokenService = tokenService;
         }
 
         [HttpPost]
-        public async Task<UserDTO> CreateUser(UserDTO dto)
+        public async Task<ActionResult<UserDTO>> CreateUser(UserDTO dto)
         {
             var user = await _userService.CreateUser(dto);
 
-            return user;
+            return CustomResponse(user);
         }
 
         [HttpPatch]
@@ -46,16 +48,16 @@ namespace UserApi.Controllers
 
             if (updatedUser is null)
             {
-                return Forbid();
+                return CustomResponse();
             }
 
             var token = _tokenService.GenerateToken(updatedUser);
 
-            return new AuthDTO()
+            return CustomResponse(new AuthDTO()
             {
                 UserName = updatedUser.UserName,
                 Token = token,
-            };
+            });
         }
     }
 }

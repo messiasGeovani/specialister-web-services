@@ -1,8 +1,8 @@
 ﻿namespace Domain.Entities
 {
-    public abstract class Entity
+    public abstract class BaseEntity
     {
-        protected Entity()
+        protected BaseEntity()
         {
             Id = Guid.NewGuid();
         }

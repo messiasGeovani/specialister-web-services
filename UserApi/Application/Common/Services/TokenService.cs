@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using UserApi.Interfaces;
+using UserApi.Application.Common.Interfaces;
 
-namespace UserApi.Services
+namespace UserApi.Application.Common.Services
 {
     public class TokenService : ITokenService
     {
@@ -37,7 +37,7 @@ namespace UserApi.Services
                 {
                     new Claim("Id", user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role.ToString()),                    
+                    new Claim(ClaimTypes.Role, user.Role.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

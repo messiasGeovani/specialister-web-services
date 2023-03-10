@@ -2,7 +2,7 @@
 using Domain.Entities;
 using UserApi.Application.DTOs;
 
-namespace UserApi.Configuration
+namespace UserApi.Application.Configuration.AutoMapper
 {
     public class UserProfile : BaseProfile
     {

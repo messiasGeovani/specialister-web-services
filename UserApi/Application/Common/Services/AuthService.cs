@@ -2,9 +2,8 @@
 using Application.Common.Interfaces;
 using AutoMapper;
 using Domain.Interfaces;
-using UserApi.Application.DTOs;
-using UserApi.Application.Interfaces;
-using UserApi.Interfaces;
+using UserApi.Application.Common.DTOs;
+using UserApi.Application.Common.Interfaces;
 
 namespace UserApi.Application.Common.Services
 {

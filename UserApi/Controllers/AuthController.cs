@@ -1,8 +1,8 @@
 ﻿using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UserApi.Application.DTOs;
-using UserApi.Application.Interfaces;
+using UserApi.Application.Common.DTOs;
+using UserApi.Application.Common.Interfaces;
 
 namespace UserApi.Controllers
 {

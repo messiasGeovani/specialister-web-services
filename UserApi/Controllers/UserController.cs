@@ -3,8 +3,8 @@ using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using UserApi.Application.DTOs;
-using UserApi.Interfaces;
+using UserApi.Application.Common.DTOs;
+using UserApi.Application.Common.Interfaces;
 
 namespace UserApi.Controllers
 {

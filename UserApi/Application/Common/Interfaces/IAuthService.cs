@@ -1,6 +1,6 @@
-﻿using UserApi.Application.DTOs;
+﻿using UserApi.Application.Common.DTOs;
 
-namespace UserApi.Application.Interfaces
+namespace UserApi.Application.Common.Interfaces
 {
     public interface IAuthService
     {

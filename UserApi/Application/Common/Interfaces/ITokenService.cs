@@ -1,6 +1,6 @@
 ﻿using Application.Common.DTOs;
 
-namespace UserApi.Interfaces
+namespace UserApi.Application.Common.Interfaces
 {
     public interface ITokenService
     {
@@ -8,5 +8,5 @@ namespace UserApi.Interfaces
         UserDTO DecryptToken(string token);
     }
 
-    
+
 }

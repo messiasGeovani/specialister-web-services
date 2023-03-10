@@ -14,13 +14,20 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public ValueTask<User?> FindById(Guid id)        
+        public Task<List<User>> Get()
+        {
+            return _context.Users.ToListAsync();
+        }
+
+        public ValueTask<User?> GetById(Guid id)
             => _context.Users.FindAsync(id);
 
-        public Task<User?> Find(string username, string password)
-            => _context.Users
-                .Where(x => x.UserName == username && x.Password == password)
-                .SingleOrDefaultAsync();
-          
+        public Task Create(User user)
+        {
+            _context.Users.Add(user);
+
+            return _context.SaveChangesAsync();
+        }
+
     }
 }

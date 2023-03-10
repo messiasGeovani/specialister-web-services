@@ -4,7 +4,8 @@ namespace Domain.Interfaces
 {
     public interface IUserRepository
     {
-        ValueTask<User?> FindById(Guid id);
-        Task<User?> Find(string username, string password);
+        Task<List<User>> Get();
+        ValueTask<User?> GetById(Guid id);
+        Task Create(User user);
     }
 }

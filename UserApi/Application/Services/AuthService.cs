@@ -29,10 +29,12 @@ namespace UserApi.Application.Services
 
         public async Task<AuthDTO?> Authenticate(string username, string password)
         {
-            var hashPassword = _hashService.EncryptPassword(password);
-            var user = await _userRepository.Find(username, hashPassword);
+            var users = await _userRepository.Get();
 
-            if (user == null)
+            var user = users?.FirstOrDefault(
+                x => x.UserName == username && _hashService.Compare(password, x.Password) == true);
+
+            if (user is null)
             {
                 return null;
             }
@@ -40,7 +42,9 @@ namespace UserApi.Application.Services
             var token = _tokenService.GenerateToken(user);
             var dto = _mapper.Map<AuthDTO>(user);
 
+            dto.Password = null;
             dto.Token = token;
+
 
             return dto;
         }

@@ -28,7 +28,7 @@ namespace UserApi.Controllers
         {
             var auth = await _authService.Authenticate(model.UserName, model.Password);
 
-            if (auth == null)
+            if (auth is null)
             {
                 return BadRequest(new { message = "Usuário ou senha inválida" });
             }

@@ -1,9 +1,17 @@
 ﻿using Application.Interfaces;
+using BCrypt.Net;
 
 namespace Application.Services
 {
     public class HashService : IHashService
     {
+        private string salt;
+
+        public HashService()
+        {
+            salt = BCrypt.Net.BCrypt.GenerateSalt(12);
+        }
+
         public string Encrypt(string key)
         {
             return BCrypt.Net.BCrypt.HashString(key);
@@ -11,12 +19,12 @@ namespace Application.Services
 
         public string EncryptPassword(string key)
         {
-            return BCrypt.Net.BCrypt.HashPassword(key);
+            return BCrypt.Net.BCrypt.HashPassword(key, salt);
         }
 
-        public bool Compare(string hash, string key)
+        public bool Compare(string key, string hash)
         {
-            return BCrypt.Net.BCrypt.Verify(hash, key);
+            return BCrypt.Net.BCrypt.Verify(key, hash);
         }
 
     }

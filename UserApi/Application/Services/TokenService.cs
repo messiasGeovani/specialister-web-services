@@ -19,6 +19,12 @@ namespace UserApi.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("AppSettings:TokenSecret"));
+
+            if (user.Role is null)
+            {
+                user.Role = "";
+            }
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

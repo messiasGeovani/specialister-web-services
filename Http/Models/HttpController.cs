@@ -14,7 +14,7 @@ namespace Http.Models
             _errorNotifier = errorNotifier;
         }
 
-        protected ActionResult CustomResponse(object result = null)
+        protected ActionResult CustomResponse(object? result = null)
         {
             if (IsValidOperation())
             {

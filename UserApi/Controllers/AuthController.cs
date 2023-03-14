@@ -33,7 +33,7 @@ namespace UserApi.Controllers
         [HttpGet]
         [Route("anonymous")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Anonymous()
+        public ActionResult<dynamic> Anonymous()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -51,11 +51,11 @@ namespace UserApi.Controllers
         [HttpGet]
         [Route("specialists")]
         [Authorize(Roles = "specialist")]
-        public async Task<ActionResult> Specialist() => NoContent();
+        public ActionResult Specialist() => NoContent();
 
         [HttpGet]
         [Route("explorers")]
         [Authorize(Roles = "explorer")]
-        public async Task<ActionResult> Explorer() => NoContent();
+        public ActionResult Explorer() => NoContent();
     }
 }

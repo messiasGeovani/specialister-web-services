@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 namespace Http.Models
 {
     [ApiController]
-    public abstract class HttpController : ControllerBase
+    public abstract class MainController : ControllerBase
     {
         private readonly IErrorNotifier _errorNotifier;
 
-        protected HttpController(IErrorNotifier errorNotifier)
+        protected MainController(IErrorNotifier errorNotifier)
         {
             _errorNotifier = errorNotifier;
         }

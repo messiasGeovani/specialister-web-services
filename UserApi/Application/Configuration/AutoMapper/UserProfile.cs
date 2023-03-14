@@ -4,7 +4,7 @@ using UserApi.Application.Common.DTOs;
 
 namespace UserApi.Application.Configuration.AutoMapper
 {
-    public class UserProfile : BaseProfile
+    public class UserProfile : MainProfile
     {
         public UserProfile() : base()
         {

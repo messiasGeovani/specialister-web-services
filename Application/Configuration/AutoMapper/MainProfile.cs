@@ -4,9 +4,9 @@ using Domain.Entities;
 
 namespace Application.Configuration.AutoMapper
 {
-    public class BaseProfile : Profile
+    public class MainProfile : Profile
     {
-        public BaseProfile()
+        public MainProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
         }

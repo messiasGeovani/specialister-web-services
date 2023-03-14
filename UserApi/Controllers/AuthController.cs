@@ -9,7 +9,7 @@ namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : HttpController
+    public class AuthController : MainController
     {
         private IAuthService _authService;
         private IHashService _hashService;
@@ -23,9 +23,9 @@ namespace UserApi.Controllers
 
         [HttpPost]
         [Route("auth")]
-        public async Task<ActionResult<AuthDTO>> Authenticate([FromBody] AuthDTO model)
+        public async Task<ActionResult<AuthDTO>> Authenticate([FromBody] AuthDTO dto)
         {
-            var auth = await _authService.Authenticate(model.UserName, model.Password);
+            var auth = await _authService.Authenticate(dto);
 
             return CustomResponse(auth);
         }

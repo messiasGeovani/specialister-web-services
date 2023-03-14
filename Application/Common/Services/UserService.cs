@@ -22,25 +22,35 @@ namespace Application.Common.Services
             _hashService = hashService;
         }
 
-        public async Task<UserDTO> GetUser(Guid id)
+        public async Task<UserDTO?> GetUser(Guid id)
         {
             var user = await _userRepository.GetById(id);
 
             if (user is null)
             {
+                _errorNotifier.AddNotification("User does not exist!");
                 return null;
             }
 
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> CreateUser(UserDTO dto)
+        public async Task<UserDTO?> CreateUser(UserDTO dto)
         {
-            var hashPassword = _hashService.EncryptPassword(dto.Password);
+            var users = await _userRepository.Search(
+                x => x.UserName == dto.UserName
+            );
+
+            if (users != null)
+            {
+                _errorNotifier.AddNotification("Username already exists!");
+                return null;
+            }
+
             var user = new User()
             {
                 UserName = dto.UserName,
-                Password = hashPassword,
+                Password = dto.Password,
             };
 
             await _userRepository.Create(user);
@@ -50,13 +60,13 @@ namespace Application.Common.Services
             return _mapper.Map<UserDTO>(user);
         }
 
-        public async Task<UserDTO> SetUserRole(string role, Guid userId)
+        public async Task<UserDTO?> SetUserRole(string role, Guid userId)
         {
             var user = await _userRepository.GetById(userId);
 
             if (user is null)
             {
-                _errorNotifier.AddNotification("User do not exist!");
+                _errorNotifier.AddNotification("User does not exist!");
                 return null;
             }
 

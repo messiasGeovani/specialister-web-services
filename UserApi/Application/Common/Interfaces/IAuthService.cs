@@ -4,6 +4,6 @@ namespace UserApi.Application.Common.Interfaces
 {
     public interface IAuthService
     {
-        public Task<AuthDTO?> Authenticate(string username, string password);
+        public Task<AuthDTO?> Authenticate(AuthDTO dto);
     }
 }

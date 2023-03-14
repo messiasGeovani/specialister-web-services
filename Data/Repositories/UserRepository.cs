@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Data.Repositories
 {
@@ -15,9 +16,8 @@ namespace Data.Repositories
         }
 
         public Task<List<User>> Get()
-        {
-            return _context.Users.ToListAsync();
-        }
+            => _context.Users.ToListAsync();
+
 
         public ValueTask<User?> GetById(Guid id)
             => _context.Users.FindAsync(id);
@@ -33,6 +33,14 @@ namespace Data.Repositories
         {
             _context.Users.Update(user);
             return _context.SaveChangesAsync();
+        }
+
+        public Task<List<User>> Search(Expression<Func<User, bool>> query)
+        {
+            return _context.Users
+                .AsQueryable()
+                .Where(query)
+                .ToListAsync();
         }
     }
 }

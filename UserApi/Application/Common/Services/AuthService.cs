@@ -20,7 +20,7 @@ namespace UserApi.Application.Common.Services
             IErrorNotifier errorNotifier,
             IUserRepository userRepository,
             ITokenService tokenService,
-            IHashService hashService            
+            IHashService hashService
         )
         {
             _mapper = mapper;
@@ -30,26 +30,33 @@ namespace UserApi.Application.Common.Services
             _hashService = hashService;
         }
 
-        public async Task<AuthDTO?> Authenticate(string username, string password)
+        public async Task<AuthDTO?> Authenticate(AuthDTO dto)
         {
-            var users = await _userRepository.Get();
+            var users = await _userRepository.Search(
+                x => x.UserName == dto.UserName
+            );
 
-            var user = users?.FirstOrDefault(
-                x => x.UserName == username && _hashService.Compare(password, x.Password) == true);
-
-            if (user is null)
+            if (users is null)
             {
-                _errorNotifier.AddNotification("Usuário ou senha inválidos");
+                _errorNotifier.AddNotification("Invalid user data!");
+                return null;
+            }
+
+            var user = users.FirstOrDefault(x => _hashService.Compare(dto.Password, x.Password) == true);
+
+            if (users is null)
+            {
+                _errorNotifier.AddNotification("Invalid user data!");
                 return null;
             }
 
             var token = _tokenService.GenerateToken(_mapper.Map<UserDTO>(user));
-            var dto = _mapper.Map<AuthDTO>(user);
+            var response = _mapper.Map<AuthDTO>(user);
 
-            dto.Password = null;
-            dto.Token = token;
+            response.Password = null;
+            response.Token = token;
 
-            return dto;
+            return response;
         }
     }
 }

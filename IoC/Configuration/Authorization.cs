@@ -2,7 +2,7 @@
 
 namespace IoC.Configuration
 {
-    public class AuthorizationConfig
+    public class Authorization
     {
         public static IServiceCollection Setup(IServiceCollection services)
         {

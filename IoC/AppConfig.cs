@@ -9,9 +9,10 @@ namespace IoC
     {
         public static IServiceCollection ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            AuthenticationConfig.Setup(services, configuration);
-            AuthorizationConfig.Setup(services);
-            AutomapperConfig.Setup(services);
+            Cors.Setup(services);
+            Authentication.Setup(services, configuration);
+            Authorization.Setup(services);
+            Automapper.Setup(services);
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

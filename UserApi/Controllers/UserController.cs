@@ -11,7 +11,7 @@ namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : BaseController
+    public class UserController : HttpController
     {
         private IUserService _userService;
         private ITokenService _tokenService;

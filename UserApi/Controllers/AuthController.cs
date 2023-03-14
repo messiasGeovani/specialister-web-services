@@ -9,7 +9,7 @@ namespace UserApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : BaseController
+    public class AuthController : HttpController
     {
         private IAuthService _authService;
         private IHashService _hashService;

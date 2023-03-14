@@ -6,7 +6,7 @@ using System.Text;
 
 namespace IoC.Configuration
 {
-    public class AuthenticationConfig
+    public class Authentication
     {
         public static IServiceCollection Setup(IServiceCollection services, IConfiguration configuration)
         {

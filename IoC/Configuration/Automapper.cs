@@ -2,7 +2,7 @@
 
 namespace IoC.Configuration
 {
-    public class AutomapperConfig
+    public class Automapper
     {
         public static IServiceCollection Setup(IServiceCollection services)
         {

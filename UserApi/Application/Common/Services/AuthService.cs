@@ -33,7 +33,7 @@ namespace UserApi.Application.Common.Services
         public async Task<AuthDTO?> Authenticate(AuthDTO dto)
         {
             var users = await _userRepository.Search(
-                x => x.UserName == dto.UserName
+                x => x.Username == dto.UserName
             );
 
             if (users is null)

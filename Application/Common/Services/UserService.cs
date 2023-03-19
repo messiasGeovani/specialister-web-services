@@ -38,7 +38,7 @@ namespace Application.Common.Services
         public async Task<UserDTO?> CreateUser(UserDTO dto)
         {
             var users = await _userRepository.Search(
-                x => x.UserName == dto.UserName
+                x => x.Username == dto.Username
             );
 
             if (users != null)
@@ -49,7 +49,7 @@ namespace Application.Common.Services
 
             var user = new User()
             {
-                UserName = dto.UserName,
+                Username = dto.Username,
                 Password = dto.Password,
             };
 

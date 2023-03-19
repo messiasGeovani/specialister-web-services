@@ -55,7 +55,7 @@ namespace UserApi.Controllers
 
             return CustomResponse(new AuthDTO()
             {
-                UserName = updatedUser.UserName,
+                UserName = updatedUser.Username,
                 Token = token,
             });
         }

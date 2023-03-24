@@ -9,42 +9,59 @@ using UserApi.Application.Common.Interfaces;
 
 namespace UserApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : MainController
     {
-        private IUserService _userService;
+        private IUserUseCase _userUseCase;
         private ITokenService _tokenService;
 
-        public UserController(IUserService userService, ITokenService tokenService, IErrorNotifier errorNotifier)
+        public UserController(IUserUseCase userUseCase, ITokenService tokenService, IErrorNotifier errorNotifier)
             : base(errorNotifier)
         {
-            _userService = userService;
+            _userUseCase = userUseCase;
             _tokenService = tokenService;
         }
 
         [HttpPost]
         public async Task<ActionResult<UserDTO>> CreateUser(UserDTO dto)
         {
-            var user = await _userService.CreateUser(dto);
+            var user = await _userUseCase.CreateUser(dto);
 
-            return CustomResponse(user);
+            if (user is null)
+            {
+                return CustomResponse();
+            }
+
+            var token = _tokenService.GenerateToken(user);
+
+            return CustomResponse(new
+            {
+                UserName = user.Username,
+                Token = token
+            });
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("usernames/{username}")]
+        public async Task<ActionResult> CheckUserName([FromRoute] string username)
+        {
+            var userNameAlreadyExists = await _userUseCase.CheckIfUsernameExists(username);
+
+            return CustomResponse(new
+            {
+                UsernameAlreadyExists = userNameAlreadyExists
+            });
         }
 
         [HttpPatch]
         [Authorize]
-        [Route("roles/specialist")]
-        public async Task<ActionResult<AuthDTO>> SetUSerRole()
+        [Route("roles/{role}")]
+        public async Task<ActionResult<AuthDTO>> SetUserRole([FromRoute] string role)
         {
-            const string ROLE = "specialist";
-
             var userId = HttpContext.User.FindFirstValue("Id");
-
-            if (userId is null) { 
-                return Unauthorized();
-            }
-
-            var updatedUser = await _userService.SetUserRole(ROLE, new Guid(userId));
+            var updatedUser = await _userUseCase.SetUserRole(role, new Guid(userId));
 
             if (updatedUser is null)
             {
@@ -53,9 +70,10 @@ namespace UserApi.Controllers
 
             var token = _tokenService.GenerateToken(updatedUser);
 
-            return CustomResponse(new AuthDTO()
+            return CustomResponse(new
             {
                 UserName = updatedUser.Username,
+                Role = updatedUser.Role,
                 Token = token,
             });
         }

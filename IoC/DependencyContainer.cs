@@ -1,6 +1,7 @@
 ﻿using Application.Common.Errors;
 using Application.Common.Interfaces;
 using Application.Common.Services;
+using Application.Common.UseCases;
 using Data.Context;
 using Data.Interfaces;
 using Data.Repositories;
@@ -29,7 +30,7 @@ namespace IoC
 
         public static IServiceCollection RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserUseCase, UserUseCase>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IHashService, HashService>();
             services.AddScoped<IErrorNotifier, ErrorNotifier>();

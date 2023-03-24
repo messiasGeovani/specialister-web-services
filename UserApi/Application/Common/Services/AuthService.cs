@@ -36,7 +36,7 @@ namespace UserApi.Application.Common.Services
                 x => x.Username == dto.UserName
             );
 
-            if (users is null)
+            if (users is null || !users.Any())
             {
                 _errorNotifier.AddNotification("Invalid user data!");
                 return null;
@@ -44,7 +44,7 @@ namespace UserApi.Application.Common.Services
 
             var user = users.FirstOrDefault(x => _hashService.Compare(dto.Password, x.Password) == true);
 
-            if (users is null)
+            if (user is null)
             {
                 _errorNotifier.AddNotification("Invalid user data!");
                 return null;

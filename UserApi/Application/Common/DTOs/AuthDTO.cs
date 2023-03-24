@@ -12,6 +12,8 @@ namespace UserApi.Application.Common.DTOs
         [StringLength(16, ErrorMessage = "The field {0} must have length between {2} and {1} characters.", MinimumLength = 8)]
         public string Password { get; set; }
 
+        public string? Role { get; set; }
+
         public string? Token { get; set; }
     }
 }

@@ -5,16 +5,16 @@ using Domain.Entities;
 using Domain.Interfaces;
 
 
-namespace Application.Common.Services
+namespace Application.Common.UseCases
 {
-    public class UserService : IUserService
+    public class UserUseCase : IUserUseCase
     {
         private IErrorNotifier _errorNotifier;
         private IUserRepository _userRepository;
         private IMapper _mapper;
         private IHashService _hashService;
 
-        public UserService(IErrorNotifier errorNotifier, IUserRepository userRepository, IMapper mapper, IHashService hashService)
+        public UserUseCase(IErrorNotifier errorNotifier, IUserRepository userRepository, IMapper mapper, IHashService hashService)
         {
             _errorNotifier = errorNotifier;
             _userRepository = userRepository;
@@ -41,7 +41,7 @@ namespace Application.Common.Services
                 x => x.Username == dto.Username
             );
 
-            if (users != null)
+            if (users.Any())
             {
                 _errorNotifier.AddNotification("Username already exists!");
                 return null;
@@ -50,7 +50,7 @@ namespace Application.Common.Services
             var user = new User()
             {
                 Username = dto.Username,
-                Password = dto.Password,
+                Password = _hashService.EncryptPassword(dto.Password),
             };
 
             await _userRepository.Create(user);
@@ -62,6 +62,14 @@ namespace Application.Common.Services
 
         public async Task<UserDTO?> SetUserRole(string role, Guid userId)
         {
+            var isValidRole = role == "specialist" || role == "explorer";
+
+            if (!isValidRole)
+            {
+                _errorNotifier.AddNotification("Invalid role!");
+                return null;
+            }
+
             var user = await _userRepository.GetById(userId);
 
             if (user is null)
@@ -81,6 +89,24 @@ namespace Application.Common.Services
             await _userRepository.Update(user);
 
             return _mapper.Map<UserDTO>(user);
+        }
+
+        public async Task<bool?> CheckIfUsernameExists(string username)
+        {
+            if (username is null)
+            {
+                _errorNotifier.AddNotification("Invalid username");
+                return null;
+            }
+
+            var users = await _userRepository.Search(x => x.Username == username);
+
+            if (users.Any())
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

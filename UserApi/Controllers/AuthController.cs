@@ -7,7 +7,7 @@ using UserApi.Application.Common.Interfaces;
 
 namespace UserApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : MainController
     {
@@ -22,7 +22,7 @@ namespace UserApi.Controllers
         }
 
         [HttpPost]
-        [Route("auth")]
+        [Route("")]
         public async Task<ActionResult<AuthDTO>> Authenticate([FromBody] AuthDTO dto)
         {
             var auth = await _authService.Authenticate(dto);
@@ -44,18 +44,8 @@ namespace UserApi.Controllers
             return Ok(new
             {
                 Username = "Guest_" + randomString,
-                Password = _hashService.EncryptPassword("seila123")
+                Password = ""
             });
         }
-
-        [HttpGet]
-        [Route("specialists")]
-        [Authorize(Roles = "specialist")]
-        public ActionResult Specialist() => NoContent();
-
-        [HttpGet]
-        [Route("explorers")]
-        [Authorize(Roles = "explorer")]
-        public ActionResult Explorer() => NoContent();
     }
 }

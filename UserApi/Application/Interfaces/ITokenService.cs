@@ -1,4 +1,4 @@
-﻿using Application.Modules.Users.DTOs;
+﻿using Application.Modules.User.DTOs;
 
 namespace UserApi.Application.Interfaces
 {

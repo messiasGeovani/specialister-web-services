@@ -1,4 +1,4 @@
-﻿using IoC.Configuration;
+﻿using Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

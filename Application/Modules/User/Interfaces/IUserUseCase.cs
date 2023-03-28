@@ -1,6 +1,6 @@
-﻿using Application.Modules.Users.DTOs;
+﻿using Application.Modules.User.DTOs;
 
-namespace Application.Modules.Users.Interfaces
+namespace Application.Modules.User.Interfaces
 {
     public interface IUserUseCase
     {

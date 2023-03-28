@@ -1,12 +1,11 @@
 ﻿using Application.Common.Interfaces;
-using Application.Modules.Users.DTOs;
-using Application.Modules.Users.Interfaces;
+using Application.Modules.User.DTOs;
+using Application.Modules.User.Interfaces;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Interfaces;
 
 
-namespace Application.Modules.Users.UseCases
+namespace Application.Modules.User.UseCases
 {
     public class UserUseCase : IUserUseCase
     {
@@ -48,7 +47,7 @@ namespace Application.Modules.Users.UseCases
                 return null;
             }
 
-            var user = new User()
+            var user = new Domain.Entities.User()
             {
                 Username = dto.Username,
                 Password = _hashService.EncryptPassword(dto.Password),

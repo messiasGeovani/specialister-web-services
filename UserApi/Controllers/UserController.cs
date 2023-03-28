@@ -1,6 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Application.Modules.Users.DTOs;
-using Application.Modules.Users.Interfaces;
+using Application.Modules.User.DTOs;
+using Application.Modules.User.Interfaces;
 using Http.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

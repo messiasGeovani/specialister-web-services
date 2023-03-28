@@ -1,8 +1,8 @@
 ﻿using Application.Common.Errors;
 using Application.Common.Interfaces;
 using Application.Common.Services;
-using Application.Modules.Users.Interfaces;
-using Application.Modules.Users.UseCases;
+using Application.Modules.User.Interfaces;
+using Application.Modules.User.UseCases;
 using Data.Context;
 using Data.Interfaces;
 using Data.Repositories;

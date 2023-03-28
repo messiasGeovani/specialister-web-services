@@ -1,10 +1,10 @@
-﻿using Application.Configuration.AutoMapper;
+﻿using Configuration.Mapper;
 using Domain.Entities;
 using UserApi.Application.DTOs;
 
-namespace UserApi.Infra.Configuration
+namespace UserApi.Infra.Configuration.Mapper
 {
-    public class AutoMapper : MainProfile
+    public class AutoMapper : BaseMapper
     {
         public AutoMapper() : base()
         {

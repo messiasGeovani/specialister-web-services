@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces;
-using Application.Modules.Users.DTOs;
+using Application.Modules.User.DTOs;
 using AutoMapper;
 using Domain.Interfaces;
 using UserApi.Application.DTOs;

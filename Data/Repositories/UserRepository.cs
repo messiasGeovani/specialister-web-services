@@ -8,7 +8,7 @@ namespace Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public IAppDbContext _context;
+        private IAppDbContext _context;
 
         public UserRepository(IAppDbContext context)
         {
@@ -22,16 +22,16 @@ namespace Data.Repositories
         public ValueTask<User?> GetById(Guid id)
             => _context.Users.FindAsync(id);
 
-        public Task Create(User user)
+        public Task Create(User model)
         {
-            _context.Users.Add(user);
+            _context.Users.Add(model);
 
             return _context.SaveChangesAsync();
         }
 
-        public Task Update(User user)
+        public Task Update(User model)
         {
-            _context.Users.Update(user);
+            _context.Users.Update(model);
             return _context.SaveChangesAsync();
         }
 

@@ -2,8 +2,8 @@
 using Http.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UserApi.Application.Common.DTOs;
-using UserApi.Application.Common.Interfaces;
+using UserApi.Application.DTOs;
+using UserApi.Application.Interfaces;
 
 namespace UserApi.Controllers
 {
@@ -12,17 +12,14 @@ namespace UserApi.Controllers
     public class AuthController : MainController
     {
         private IAuthService _authService;
-        private IHashService _hashService;
 
-        public AuthController(IAuthService authService, IHashService hashService, IErrorNotifier errorNotifier)
+        public AuthController(IAuthService authService, IErrorNotifier errorNotifier)
             : base(errorNotifier)
         {
             _authService = authService;
-            _hashService = hashService;
         }
 
         [HttpPost]
-        [Route("")]
         public async Task<ActionResult<AuthDTO>> Authenticate([FromBody] AuthDTO dto)
         {
             var auth = await _authService.Authenticate(dto);

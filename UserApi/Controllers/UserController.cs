@@ -1,11 +1,12 @@
-﻿using Application.Common.DTOs;
-using Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
+using Application.Modules.Users.DTOs;
+using Application.Modules.Users.Interfaces;
 using Http.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using UserApi.Application.Common.DTOs;
-using UserApi.Application.Common.Interfaces;
+using UserApi.Application.DTOs;
+using UserApi.Application.Interfaces;
 
 namespace UserApi.Controllers
 {

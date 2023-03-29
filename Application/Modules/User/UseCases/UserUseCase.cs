@@ -2,6 +2,7 @@
 using Application.Modules.User.DTOs;
 using Application.Modules.User.Interfaces;
 using AutoMapper;
+using Domain.Entities;
 using Domain.Interfaces;
 
 
@@ -9,10 +10,10 @@ namespace Application.Modules.User.UseCases
 {
     public class UserUseCase : IUserUseCase
     {
-        private IErrorNotifier _errorNotifier;
-        private IUserRepository _userRepository;
-        private IMapper _mapper;
-        private IHashService _hashService;
+        private readonly IErrorNotifier _errorNotifier;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+        private readonly IHashService _hashService;
 
         public UserUseCase(IErrorNotifier errorNotifier, IUserRepository userRepository, IMapper mapper, IHashService hashService)
         {
@@ -47,7 +48,7 @@ namespace Application.Modules.User.UseCases
                 return null;
             }
 
-            var user = new Domain.Entities.User()
+            var user = new UserEntity()
             {
                 Username = dto.Username,
                 Password = _hashService.EncryptPassword(dto.Password),

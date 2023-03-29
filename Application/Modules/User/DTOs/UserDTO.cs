@@ -16,6 +16,5 @@ namespace Application.Modules.User.DTOs
         public string Password { get; set; }
 
         public string? Role { get; set; }
-        public IEnumerable<UserDTO?>? Users { get; set; }
     }
 }

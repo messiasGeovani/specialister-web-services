@@ -8,7 +8,7 @@ namespace UserApi.Infra.Configuration.Mapper
     {
         public AutoMapper() : base()
         {
-            CreateMap<User, AuthDTO>().ReverseMap();
+            CreateMap<UserEntity, AuthDTO>().ReverseMap();
         }
     }
 }

@@ -4,8 +4,8 @@ using System.Linq.Expressions;
 
 namespace Domain.Interfaces
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IUserRepository : IBaseRepository<UserEntity>
     {
-        Task<List<User>> Search(Expression<Func<User, bool>> query);
+        Task<List<UserEntity>> Search(Expression<Func<UserEntity, bool>> query);
     }
 }

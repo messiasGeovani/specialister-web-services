@@ -3,5 +3,5 @@ using Domain.Shared.Interfaces;
 
 namespace Domain.Interfaces
 {
-    public interface IPersonRepository : IBaseRepository<Person> { }
+    public interface IPersonRepository : IBaseRepository<PersonEntity> { }
 }

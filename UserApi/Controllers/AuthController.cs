@@ -11,7 +11,7 @@ namespace UserApi.Controllers
     [ApiController]
     public class AuthController : MainController
     {
-        private IAuthService _authService;
+        private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService, IErrorNotifier errorNotifier)
             : base(errorNotifier)

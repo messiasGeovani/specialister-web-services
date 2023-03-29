@@ -15,27 +15,27 @@ namespace Data.Repositories
             _context = context;
         }
 
-        public Task<List<User>> Get()
+        public Task<List<UserEntity>> Get()
             => _context.Users.ToListAsync();
 
 
-        public ValueTask<User?> GetById(Guid id)
+        public ValueTask<UserEntity?> GetById(Guid id)
             => _context.Users.FindAsync(id);
 
-        public Task Create(User model)
+        public Task Create(UserEntity model)
         {
             _context.Users.Add(model);
 
             return _context.SaveChangesAsync();
         }
 
-        public Task Update(User model)
+        public Task Update(UserEntity model)
         {
             _context.Users.Update(model);
             return _context.SaveChangesAsync();
         }
 
-        public Task<List<User>> Search(Expression<Func<User, bool>> query)
+        public Task<List<UserEntity>> Search(Expression<Func<UserEntity, bool>> query)
         {
             return _context.Users
                 .AsQueryable()

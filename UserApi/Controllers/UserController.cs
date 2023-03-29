@@ -14,8 +14,8 @@ namespace UserApi.Controllers
     [ApiController]
     public class UserController : MainController
     {
-        private IUserUseCase _userUseCase;
-        private ITokenService _tokenService;
+        private readonly IUserUseCase _userUseCase;
+        private readonly ITokenService _tokenService;
 
         public UserController(IUserUseCase userUseCase, ITokenService tokenService, IErrorNotifier errorNotifier)
             : base(errorNotifier)

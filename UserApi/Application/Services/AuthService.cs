@@ -9,11 +9,11 @@ namespace UserApi.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private IMapper _mapper;
-        private IErrorNotifier _errorNotifier;
-        private IUserRepository _userRepository;
-        private ITokenService _tokenService;
-        private IHashService _hashService;
+        private readonly IMapper _mapper;
+        private readonly IErrorNotifier _errorNotifier;
+        private readonly IUserRepository _userRepository;
+        private readonly ITokenService _tokenService;
+        private readonly IHashService _hashService;
 
         public AuthService(
             IMapper mapper,

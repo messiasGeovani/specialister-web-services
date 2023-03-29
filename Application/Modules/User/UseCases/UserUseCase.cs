@@ -27,12 +27,6 @@ namespace Application.Modules.User.UseCases
         {
             var user = await _userRepository.GetById(id);
 
-            if (user is null)
-            {
-                _errorNotifier.AddNotification("User does not exist!");
-                return null;
-            }
-
             return _mapper.Map<UserDTO>(user);
         }
 

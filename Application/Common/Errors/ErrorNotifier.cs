@@ -22,9 +22,26 @@ namespace Application.Common.Errors
             _notifications.Add(notification);
         }
 
+        public void AddNotFoundNotification(string errorMessage)
+        {
+            var notification = new ErrorNotification(errorMessage, ErrorType.NotFound);
+            _notifications.Add(notification);
+        }
+
+        public void AddUnauthorizedNotification(string errorMessage)
+        {
+            var notification = new ErrorNotification(errorMessage, ErrorType.Unauthorized);
+            _notifications.Add(notification);
+        }
+
         public List<ErrorNotification> GetNotifications()
         {
             return _notifications;
+        }
+
+        public bool HasNotFoundNotification()
+        {
+            return _notifications.Any(n => n.Type == ErrorType.NotFound);
         }
 
         public bool HasNotification()

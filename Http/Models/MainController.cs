@@ -25,6 +25,24 @@ namespace Http.Models
                 });
             }
 
+            if (_errorNotifier.HasNotFoundNotification())
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    errrors = GetErrors()
+                });
+            }
+
+            if (_errorNotifier.HasUnauthorizedFoundNotification())
+            {
+                return Unauthorized(new
+                {
+                    success = false,
+                    errrors = GetErrors()
+                });
+            }
+
             return BadRequest(new
             {
                 success = false,

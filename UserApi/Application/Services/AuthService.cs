@@ -38,7 +38,7 @@ namespace UserApi.Application.Services
 
             if (users is null || !users.Any())
             {
-                _errorNotifier.AddNotification("Invalid user data!");
+                _errorNotifier.AddUnauthorizedNotification("Invalid user data!");
                 return null;
             }
 
@@ -46,7 +46,7 @@ namespace UserApi.Application.Services
 
             if (user is null)
             {
-                _errorNotifier.AddNotification("Invalid user data!");
+                _errorNotifier.AddUnauthorizedNotification("Invalid user data!");
                 return null;
             }
 

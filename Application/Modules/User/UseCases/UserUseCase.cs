@@ -8,7 +8,7 @@ using Domain.Interfaces;
 
 namespace Application.Modules.User.UseCases
 {
-    public class UserUseCase : IUserUseCase
+    public class UserUseCase : IProfileUseCase
     {
         private readonly IErrorNotifier _errorNotifier;
         private readonly IUserRepository _userRepository;

@@ -43,7 +43,7 @@ namespace IoC
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
-            services.AddScoped<IProfileRepository>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
 
@@ -52,7 +52,7 @@ namespace IoC
 
         private static IServiceCollection RegisterUseCases(IServiceCollection services)
         {
-            services.AddScoped<IUserUseCase, UserUseCase>();
+            services.AddScoped<IProfileUseCase, UserUseCase>();
 
             return services;
         }

@@ -2,7 +2,7 @@
 
 namespace Application.Modules.User.Interfaces
 {
-    public interface IUserUseCase
+    public interface IProfileUseCase
     {
         Task<UserDTO?> GetUser(Guid id);
         Task<UserDTO?> CreateUser(UserDTO dto);

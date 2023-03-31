@@ -11,5 +11,6 @@ namespace Domain.Entities
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public PersonEntity Person { get; set; }
+        public ProfessionalEntity Professional { get; set; }
     }
 }

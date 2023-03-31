@@ -27,6 +27,14 @@ namespace Application.Modules.User.UseCases
         {
             var user = await _userRepository.GetById(id);
 
+            if (user is null)
+            {
+                _errorNotifier.AddNotFoundNotification("User Data Not Found");
+                return null;
+            }
+
+            user.Password = null;
+
             return _mapper.Map<UserDTO>(user);
         }
 

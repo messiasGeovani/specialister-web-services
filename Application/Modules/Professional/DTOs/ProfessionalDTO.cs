@@ -1,23 +1,21 @@
 ﻿using Application.Modules.Address.DTOs;
 using System.ComponentModel.DataAnnotations;
 
-namespace Application.Modules.Person.DTOs
+namespace Application.Modules.Professional.DTOs
 {
-    public class PersonDTO
+    public class ProfessionalDTO
     {
         [Key]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required!")]
         [StringLength(100, ErrorMessage = "The field {0} must have length between {2} and {1} characters.", MinimumLength = 2)]
-        public string FirstName { get; set; }
+        public string CompanyName { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required!")]
         [StringLength(100, ErrorMessage = "The field {0} must have length between {2} and {1} characters.", MinimumLength = 2)]
-        public string LastName { get; set; }
+        public string Position { get; set; }
 
-        public string? Document { get; set; }
-
-        public AddressDTO? Address { get; set; }
+        public AddressDTO? CompanyAddress { get; set; }
     }
 }

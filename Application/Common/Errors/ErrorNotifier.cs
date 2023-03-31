@@ -44,6 +44,11 @@ namespace Application.Common.Errors
             return _notifications.Any(n => n.Type == ErrorType.NotFound);
         }
 
+        public bool HasUnauthorizedFoundNotification()
+        {
+            return _notifications.Any(n => n.Type == ErrorType.Unauthorized);
+        }
+
         public bool HasNotification()
         {
             return _notifications.Any();

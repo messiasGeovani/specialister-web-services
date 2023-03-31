@@ -16,11 +16,14 @@ namespace Data.Repositories
         }
 
         public Task<List<UserEntity>> Get()
-            => _context.Users.ToListAsync();
-
+        {
+            return _context.Users.ToListAsync();
+        }
 
         public ValueTask<UserEntity?> GetById(Guid id)
-            => _context.Users.FindAsync(id);
+        {
+            return _context.Users.FindAsync(id);
+        }
 
         public Task Create(UserEntity model)
         {

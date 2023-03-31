@@ -41,7 +41,13 @@ namespace Application.Modules.Address.UseCases
         {
             var address = await _addressRepository.GetById(id);
 
-            return _mapper.Map<AddressDTO?>(address);
+            if (address is null)
+            {
+                _errorNotifier.AddNotFoundNotification("Address Data Not Found");
+                return null;
+            }
+
+            return _mapper.Map<AddressDTO>(address);
         }
 
         public async Task<AddressDTO?> UpdateAddress(Guid id, AddressDTO addressDTO)

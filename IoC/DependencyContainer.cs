@@ -43,6 +43,9 @@ namespace IoC
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IProfileRepository>();
+            services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
 
             return services;
         }

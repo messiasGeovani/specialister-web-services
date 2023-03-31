@@ -4,6 +4,7 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230330155929_CreateProfessionalEntity")]
+    partial class CreateProfessionalEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,34 +114,6 @@ namespace Data.Migrations
                     b.ToTable("Professionals");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProfileEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Bio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ImageKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("Profiles");
-                });
-
             modelBuilder.Entity("Domain.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -183,29 +158,12 @@ namespace Data.Migrations
                     b.Navigation("CompanyAddress");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProfileEntity", b =>
-                {
-                    b.HasOne("Domain.Entities.UserEntity", "User")
-                        .WithOne("Profile")
-                        .HasForeignKey("Domain.Entities.ProfileEntity", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.AddressEntity", b =>
                 {
                     b.Navigation("Person")
                         .IsRequired();
 
                     b.Navigation("Professional")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.UserEntity", b =>
-                {
-                    b.Navigation("Profile")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

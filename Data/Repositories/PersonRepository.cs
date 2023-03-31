@@ -22,10 +22,14 @@ namespace Data.Repositories
         }
 
         public Task<List<PersonEntity>> Get()
-            => _context.People.ToListAsync();
+        {
+            return _context.People.ToListAsync();
+        }
 
         public ValueTask<PersonEntity?> GetById(Guid id)
-            => _context.People.FindAsync(id);
+        {
+            return _context.People.FindAsync(id);
+        }
 
         public Task Update(PersonEntity model)
         {

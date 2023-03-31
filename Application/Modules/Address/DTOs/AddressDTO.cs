@@ -4,6 +4,9 @@ namespace Application.Modules.Address.DTOs
 {
     public class AddressDTO
     {
+        [Key]
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "The field {0} is required!")]
         [StringLength(100, ErrorMessage = "Maximum limit of {0} characters reached!")]
         public string Street { get; set; }

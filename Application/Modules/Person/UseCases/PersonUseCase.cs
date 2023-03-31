@@ -12,14 +12,12 @@ namespace Application.Modules.Person.UseCases
         private readonly IErrorNotifier _errorNotifier;
         private readonly IPersonRepository _personRepository;
         private readonly IMapper _mapper;
-        private readonly IHashService _hashService;
 
-        public PersonUseCase(IErrorNotifier errorNotifier, IPersonRepository personRepository, IMapper mapper, IHashService hashService)
+        public PersonUseCase(IErrorNotifier errorNotifier, IPersonRepository personRepository, IMapper mapper)
         {
             _errorNotifier = errorNotifier;
             _personRepository = personRepository;
             _mapper = mapper;
-            _hashService = hashService;
         }
 
         public async Task<PersonDTO?> CreatePerson(PersonDTO dto)
@@ -35,6 +33,12 @@ namespace Application.Modules.Person.UseCases
                 person.DocumentNumber = dto.Document;
             }
 
+            if (dto.Address != null)
+            {
+                var personAddress = _mapper.Map<AddressEntity>(dto.Address);
+                person.Address = personAddress;
+            }
+
             await _personRepository.Create(person);
 
             return _mapper.Map<PersonDTO>(person);
@@ -46,7 +50,7 @@ namespace Application.Modules.Person.UseCases
 
             if (person is null)
             {
-                _errorNotifier.AddNotification("Person does not exist!");
+                _errorNotifier.AddNotFoundNotification("Person Data Not Found");
                 return null;
             }
 
@@ -59,7 +63,7 @@ namespace Application.Modules.Person.UseCases
 
             if (person is null)
             {
-                _errorNotifier.AddNotification("User does not exist!");
+                _errorNotifier.AddNotification("Person does not exist!");
             }
             else
             {

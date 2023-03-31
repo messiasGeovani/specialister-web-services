@@ -22,10 +22,14 @@ namespace Data.Repositories
         }
 
         public Task<List<AddressEntity>> Get()
-            => _context.Addresses.ToListAsync();
+        {
+            return _context.Addresses.ToListAsync();
+        }
 
         public ValueTask<AddressEntity?> GetById(Guid id)
-            => _context.Addresses.FindAsync(id);
+        {
+            return _context.Addresses.FindAsync(id);
+        }
 
         public Task Update(AddressEntity model)
         {

@@ -2,7 +2,7 @@
 {
     public class ErrorNotification
     {
-        public ErrorNotification(string message, string? type = null)
+        public ErrorNotification(string message, Enum? type = null)
         {
             Message = message;
 
@@ -13,6 +13,6 @@
         }
 
         public string Message { get; }
-        public string? Type { get; }
+        public Enum? Type { get; }
     }
 }

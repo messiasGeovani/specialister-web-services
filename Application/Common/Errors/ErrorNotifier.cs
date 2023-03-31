@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Enums;
+using Application.Common.Interfaces;
 
 namespace Application.Common.Errors
 {
@@ -41,12 +42,14 @@ namespace Application.Common.Errors
 
         public bool HasNotFoundNotification()
         {
-            return _notifications.Any(n => n.Type == ErrorType.NotFound);
+            return _notifications.Any(
+                n => n.Type != null && n.Type.Equals(ErrorType.NotFound));
         }
 
         public bool HasUnauthorizedFoundNotification()
         {
-            return _notifications.Any(n => n.Type == ErrorType.Unauthorized);
+            return _notifications.Any(
+                n => n.Type != null && n.Type.Equals(ErrorType.Unauthorized));
         }
 
         public bool HasNotification()

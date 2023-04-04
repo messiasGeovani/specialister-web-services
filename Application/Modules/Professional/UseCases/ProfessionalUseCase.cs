@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Modules.Address.DTOs;
 using Application.Modules.Professional.DTOs;
 using Application.Modules.Professional.Interfaces;
 using AutoMapper;
@@ -10,14 +11,16 @@ namespace Application.Modules.Professional.UseCases
     public class ProfessionalUseCase : IProfessionalUseCase
     {
         private readonly IProfessionalRepository _professionalRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IErrorNotifier _errorNotifier;
         private readonly IMapper _mapper;
 
-        public ProfessionalUseCase(IProfessionalRepository professionalRepository, IErrorNotifier errorNotifier, IMapper mapper)
+        public ProfessionalUseCase(IProfessionalRepository professionalRepository, IErrorNotifier errorNotifier, IMapper mapper, IAddressRepository addressRepository)
         {
             _professionalRepository = professionalRepository;
             _errorNotifier = errorNotifier;
             _mapper = mapper;
+            _addressRepository = addressRepository;
         }
 
         public async Task<ProfessionalDTO?> CreateProfessional(ProfessionalDTO dto)
@@ -58,12 +61,49 @@ namespace Application.Modules.Professional.UseCases
 
             if (professional is null)
             {
-                _errorNotifier.AddNotification("Professional does not exist!");
+                _errorNotifier.AddNotification("Invalid professional id!");
             }
             else
             {
                 await _professionalRepository.Update(_mapper.Map<ProfessionalEntity>(dto));
             }
+        }
+
+        public async Task<ProfessionalDTO?> UpdateCompanyAddress(Guid professionalID, AddressDTO addressDTO)
+        {
+            var professional = await _professionalRepository.GetById(professionalID);
+
+            if (professional is null)
+            {
+                _errorNotifier.AddNotification("Invalid professional id!");
+                return null;
+            }
+
+            if (professional.AddressId == Guid.Empty)
+            {
+                var address = new AddressEntity()
+                {
+                    City = addressDTO.City,
+                    Country = addressDTO.Country,
+                    Number = addressDTO.Number,
+                    PostalCode = addressDTO.PostalCode,
+                    State = addressDTO.State,
+                    Street = addressDTO.Street,
+                };
+
+                await _addressRepository.Create(address);
+
+                professional.AddressId = address.Id;
+                professional.CompanyAddress = address;
+            }
+            else
+            {
+                professional.CompanyAddress = _mapper.Map<AddressEntity>(addressDTO);
+            }
+
+            await _professionalRepository.Update(professional);
+
+            return _mapper.Map<ProfessionalDTO>(professional);
         }
     }
 }

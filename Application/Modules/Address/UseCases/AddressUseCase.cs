@@ -10,14 +10,16 @@ namespace Application.Modules.Address.UseCases
     public class AddressUseCase : IAddressUseCase
     {
         private readonly IAddressRepository _addressRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IErrorNotifier _errorNotifier;
         private readonly IMapper _mapper;
 
-        public AddressUseCase(IAddressRepository addressRepository, IErrorNotifier errorNotifier, IMapper mapper)
+        public AddressUseCase(IAddressRepository addressRepository, IErrorNotifier errorNotifier, IMapper mapper, IPersonRepository personRepository)
         {
             _addressRepository = addressRepository;
             _errorNotifier = errorNotifier;
             _mapper = mapper;
+            _personRepository = personRepository;
         }
 
         public async Task<AddressDTO?> CreateAddress(AddressDTO addressDTO)
@@ -48,21 +50,6 @@ namespace Application.Modules.Address.UseCases
             }
 
             return _mapper.Map<AddressDTO>(address);
-        }
-
-        public async Task<AddressDTO?> UpdateAddress(Guid id, AddressDTO addressDTO)
-        {
-            var address = await _addressRepository.GetById(id);
-
-            if (address is null)
-            {
-                _errorNotifier.AddNotification("Address does not exist!");
-                return null;
-            }
-
-            await _addressRepository.Update(_mapper.Map<AddressEntity>(addressDTO));
-
-            return addressDTO;
         }
     }
 }

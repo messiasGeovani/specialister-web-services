@@ -13,6 +13,7 @@ namespace Data.Context
         public DbSet<AddressEntity> Addresses { get; set; }
         public DbSet<ProfessionalEntity> Professionals { get; set; }
         public DbSet<ProfileEntity> Profiles { get; set; }
+        public DbSet<ProfileConnectionEntity> Connections { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

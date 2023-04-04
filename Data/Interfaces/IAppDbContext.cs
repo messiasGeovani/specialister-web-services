@@ -10,6 +10,7 @@ namespace Data.Interfaces
         DbSet<AddressEntity> Addresses { get; set; }
         DbSet<ProfessionalEntity> Professionals { get; set; }
         DbSet<ProfileEntity> Profiles { get; set; }
+        DbSet<ProfileConnectionEntity> Connections { get; set; }
 
         Task<int> SaveChangesAsync();
     }

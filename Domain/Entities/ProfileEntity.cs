@@ -9,5 +9,6 @@ namespace Domain.Entities
         public bool? Completed { get; set; }
         public Guid UserId { get; set; }
         public UserEntity User { get; set; }
+        public List<ProfileConnectionEntity> Connections { get; set; }
     }
 }

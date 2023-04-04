@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.Modules.Address.DTOs;
 using Application.Modules.Person.DTOs;
 using Application.Modules.Person.Interfaces;
 using AutoMapper;
@@ -11,13 +12,15 @@ namespace Application.Modules.Person.UseCases
     {
         private readonly IErrorNotifier _errorNotifier;
         private readonly IPersonRepository _personRepository;
+        private readonly IAddressRepository _addressRepository;
         private readonly IMapper _mapper;
 
-        public PersonUseCase(IErrorNotifier errorNotifier, IPersonRepository personRepository, IMapper mapper)
+        public PersonUseCase(IErrorNotifier errorNotifier, IPersonRepository personRepository, IMapper mapper, IAddressRepository addressRepository)
         {
             _errorNotifier = errorNotifier;
             _personRepository = personRepository;
             _mapper = mapper;
+            _addressRepository = addressRepository;
         }
 
         public async Task<PersonDTO?> CreatePerson(PersonDTO dto)
@@ -69,6 +72,43 @@ namespace Application.Modules.Person.UseCases
             {
                 await _personRepository.Update(_mapper.Map<PersonEntity>(dto));
             }
+        }
+
+        public async Task<PersonDTO?> UpdatePersonAddress(Guid personID, AddressDTO addressDTO)
+        {
+            var person = await _personRepository.GetById(personID);
+
+            if (person is null)
+            {
+                _errorNotifier.AddNotification("Invalid person id!");
+                return null;
+            }
+
+            if (person.AddressId == Guid.Empty)
+            {
+                var address = new AddressEntity()
+                {
+                    City = addressDTO.City,
+                    Country = addressDTO.Country,
+                    Number = addressDTO.Number,
+                    PostalCode = addressDTO.PostalCode,
+                    State = addressDTO.State,
+                    Street = addressDTO.Street,
+                };
+
+                await _addressRepository.Create(address);
+
+                person.AddressId = address.Id;
+                person.Address = address;
+            }
+            else
+            {
+                person.Address = _mapper.Map<AddressEntity>(addressDTO);
+            }
+
+            await _personRepository.Update(person);
+
+            return _mapper.Map<PersonDTO>(person);
         }
     }
 }

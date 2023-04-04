@@ -30,9 +30,9 @@ namespace IoC
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<AppDbContext>(options =>
-           {
-               options.UseSqlServer(connectionString);
-           });
+            {
+                options.UseSqlServer(connectionString);
+            });
 
             services.AddScoped<IAppDbContext>(provider => provider.GetService<AppDbContext>());
 

@@ -1,4 +1,5 @@
-﻿using Application.Modules.Person.DTOs;
+﻿using Application.Modules.Address.DTOs;
+using Application.Modules.Person.DTOs;
 
 namespace Application.Modules.Person.Interfaces
 {
@@ -7,5 +8,6 @@ namespace Application.Modules.Person.Interfaces
         Task<PersonDTO?> GetPerson(Guid id);
         Task<PersonDTO?> CreatePerson(PersonDTO dto);
         Task UpdatePerson(Guid id, PersonDTO dto);
+        Task<PersonDTO?> UpdatePersonAddress(Guid personID, AddressDTO addressDTO);
     }
 }

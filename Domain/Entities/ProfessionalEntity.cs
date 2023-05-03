@@ -8,6 +8,5 @@ namespace Domain.Entities
         public string Position { get; set; }
         public Guid AddressId { get; set; }
         public AddressEntity CompanyAddress { get; set; }
-        public ProfileConnectionEntity[] connections { get; set; }
     }
 }

@@ -10,5 +10,9 @@ namespace Domain.Entities
         public Guid UserId { get; set; }
         public UserEntity User { get; set; }
         public List<ProfileConnectionEntity> Connections { get; set; }
+        public List<RatingEntity> ReceivedRatings { get; set; }
+        public List<RatingEntity> SentRatings { get; set; }
+        public List<MessageEntity> Messages { get; set; }
+
     }
 }

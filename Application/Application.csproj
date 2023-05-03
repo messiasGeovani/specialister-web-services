@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Issue\Interfaces\" />
     <Folder Include="Modules\Profile\UseCases\" />
   </ItemGroup>
 

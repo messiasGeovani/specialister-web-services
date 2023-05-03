@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(IAppDbContext))]
-    [Migration("20230330155929_CreateProfessionalEntity")]
-    partial class CreateProfessionalEntity
+    [Migration("20230405134136_CreateRatingEntity")]
+    partial class CreateRatingEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,88 @@ namespace Data.Migrations
                     b.ToTable("Professionals");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProfileConnectionEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProfessionalEntityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionalEntityId");
+
+                    b.HasIndex("ProfileId");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProfileEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImageKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Profiles");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RatingEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuthorID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ReceiverID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
+
+                    b.HasIndex("ReceiverID");
+
+                    b.ToTable("ProfileRatings");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -159,12 +241,77 @@ namespace Data.Migrations
                     b.Navigation("CompanyAddress");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProfileConnectionEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.ProfessionalEntity", null)
+                        .WithMany("connections")
+                        .HasForeignKey("ProfessionalEntityId");
+
+                    b.HasOne("Domain.Entities.ProfileEntity", "Profile")
+                        .WithMany("Connections")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProfileEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.UserEntity", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("Domain.Entities.ProfileEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.RatingEntity", b =>
+                {
+                    b.HasOne("Domain.Entities.ProfileEntity", "Author")
+                        .WithMany("SentRatings")
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.ProfileEntity", "Receiver")
+                        .WithMany("ReceivedRatings")
+                        .HasForeignKey("ReceiverID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Receiver");
+                });
+
             modelBuilder.Entity("Domain.Entities.AddressEntity", b =>
                 {
                     b.Navigation("Person")
                         .IsRequired();
 
                     b.Navigation("Professional")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProfessionalEntity", b =>
+                {
+                    b.Navigation("connections");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProfileEntity", b =>
+                {
+                    b.Navigation("Connections");
+
+                    b.Navigation("ReceivedRatings");
+
+                    b.Navigation("SentRatings");
+                });
+
+            modelBuilder.Entity("Domain.Entities.UserEntity", b =>
+                {
+                    b.Navigation("Profile")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

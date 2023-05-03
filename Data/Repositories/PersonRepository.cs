@@ -1,41 +1,14 @@
-﻿using Data.Interfaces;
+﻿using Data.Base.Repositories;
+using Data.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository : BaseRepository<PersonEntity>, IPersonRepository
     {
-        private IAppDbContext _context;
-
-        public PersonRepository(IAppDbContext context)
+        public PersonRepository(IAppDbContext context) : base(context, context.People)
         {
-            _context = context;
-        }
-
-        public Task Create(PersonEntity model)
-        {
-            _context.People.Add(model);
-
-            return _context.SaveChangesAsync();
-        }
-
-        public Task<List<PersonEntity>> Get()
-        {
-            return _context.People.ToListAsync();
-        }
-
-        public ValueTask<PersonEntity?> GetById(Guid id)
-        {
-            return _context.People.FindAsync(id);
-        }
-
-        public Task Update(PersonEntity model)
-        {
-            _context.People.Update(model);
-
-            return _context.SaveChangesAsync();
         }
     }
 }

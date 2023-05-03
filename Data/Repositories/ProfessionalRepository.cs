@@ -1,41 +1,15 @@
-﻿using Data.Context;
+﻿using Data.Base.Repositories;
+using Data.Interfaces;
 using Domain.Entities;
 using Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public class ProfessionalRepository : IProfessionalRepository
+    public class ProfessionalRepository : BaseRepository<ProfessionalEntity>, IProfessionalRepository
     {
-        private readonly AppDbContext _context;
 
-        public ProfessionalRepository(AppDbContext appDbContext)
+        public ProfessionalRepository(IAppDbContext context) : base(context, context.Professionals)
         {
-            _context = appDbContext;
-        }
-
-        public Task Create(ProfessionalEntity model)
-        {
-            _context.Professionals.Add(model);
-
-            return _context.SaveChangesAsync();
-        }
-
-        public Task<List<ProfessionalEntity>> Get()
-        {
-            return _context.Professionals.ToListAsync();
-        }
-
-        public ValueTask<ProfessionalEntity?> GetById(Guid id)
-        {
-            return _context.Professionals.FindAsync(id);
-        }
-
-        public Task Update(ProfessionalEntity model)
-        {
-            _context.Professionals.Update(model);
-
-            return _context.SaveChangesAsync();
         }
     }
 }
